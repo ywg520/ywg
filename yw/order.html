@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>订单管理模块</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- 新 Bootstrap5 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+		 
+		<!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+		<style>
+			* {margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+			body {background:#f5f5f5;padding:20px;}
+	        .panel {background:white;padding:20px;border-radius:8px;margin-bottom:20px;}
+			.panel h2 {border-left:3px solid #3498db;padding-left:10px;margin-bottom:20px;}
+			.form-group {margin-bottom:15px;}
+			.form-group label {display:block;margin-bottom:5px;}
+			.form-control {width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;}
+			.btn {padding:8px 16px;border:none;border-radius:4px;background:#3498db;color:white;cursor:pointer;}
+			.btn-default {background:#eee;color:#333;}
+			table {width:100%;border-collapse:collapse;margin-top:15px;}
+			th,td {border:1px solid #ddd;padding:10px;text-align:left;}
+			th {background:#f8f9fa;}
+			.header {margin-bottom:20px;}
+			.header a {text-decoration:none;color:#3498db;}
+		</style>
+		<script>
+			function filterOrder(){
+				//获取下拉框元素
+				statusSelect=document.getElementById("order-status");
+				number=statusSelect.selectedIndex;
+				if(number==0){
+					alert("已筛选全部订单");
+				}else if(number==1){
+					alert("已筛选待支付订单");
+				}else if(number==2){
+					alert("已筛选已支付订单");
+				}else if(number==3){
+					alert("已筛选已取消订单");
+				}else if(number==4){
+					alert("已筛选已完成订单");
+				}
+			}
+			function cancelOrderOD20241001001(){
+				//confirm是JS的内置函数，用于弹出确认对话框
+				if(confirm("是否确认取消")){
+					alert("订单已取消");
+				}else{
+					alert("已取消操作");
+				}
+			}
+			function cancelOrderOD20240920002(){
+				if(confirm("是否确认取消")){
+					alert("订单已取消");
+				}else{
+					alert("已取消操作");
+				}
+			}
+			function refundOD20240920002(){
+				if(confirm("是否确认退票")){
+					alert("成功退票");
+				}else{
+					alert("已取消操作");
+				}
+			}
+			function changeOD20240920002(){
+				if(confirm("是否确认改签")){
+					alert("成功改签，请重新挑选航班");
+					window.location.href="flight.html";
+				}else{
+					alert("已取消操作");
+				}
+			}
+			function toPay() {
+			    window.location.href="pay.html";
+			}
+		</script>
+	</head>
+	<body>
+		<div class="header"><a href="index.html">← 返回系统首页</a></div>
+		<div class="panel">
+			<h2>订单管理</h2>
+			<div class="form-group">
+				<label>订单状态筛选</label>
+				<select class="form-control" id="order-status" onchange="filterOrder()">
+					<option value="all">全部订单</option>
+					<option value="pending">待支付</option>
+					<option value="paid">已支付</option>
+					<option value="cancelled">已取消</option>
+					<option value="completed">已完成</option>
+				</select>
+			<div>
+				<table>
+					<tr>
+						<th>订单号</th>
+					    <th>航班信息</th>
+					    <th>乘客信息</th>
+					    <th>支付金额</th>
+					    <th>订单状态</th>
+					    <th>操作</th>
+					</tr>
+					<tr>
+					    <td>OD20241001001</td>
+					    <td>CA1501（北京-上海）</td>
+					    <td>张三（110********1234）</td>
+					    <td>¥1280</td>
+					    <td>待支付</td>
+					    <td>
+					        <button class="btn" onclick="toPay()">去支付</button>
+					        <button class="btn btn-default" onclick="cancelOrderOD20241001001()">取消</button>
+					    </td>
+					</tr>
+					<tr>
+					    <td>OD20240920002</td>
+					    <td>MU5102（上海-北京）</td>
+					    <td>李四（310********5678）</td>
+					    <td>¥1050</td>
+					    <td>已支付</td>
+					    <td>
+					        <button class="btn btn-default" onclick="refundOD20240920002()">退票</button>
+					        <button class="btn btn-default" onclick="changeOD20240920002()">改签</button>
+					    </td>
+					</tr>
+				</table>
+		</div>
+	</body>
+</html>

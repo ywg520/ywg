@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>通知设置模块</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- 新 Bootstrap5 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+		 
+		<!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+		<style>
+			* {margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+			 body {background:#f5f5f5;padding:20px;}
+			.panel {background:white;padding:20px;border-radius:8px;margin-bottom:20px;}
+			.panel h2 {border-left:3px solid #3498db;padding-left:10px;margin-bottom:20px;}
+			.btn {padding:8px 16px;border:none;border-radius:4px;background:#3498db;color:white;cursor:pointer;}
+			.btn-default {background:#eee;color:#333;}
+			.status {margin-top:15px;color:green;}
+			.header {margin-bottom:20px;}
+			.header a {text-decoration:none;color:#3498db;}
+		</style>
+		<script>
+			function allowNotify(){
+				statusElement=document.getElementById("notify-status");
+				statusElement.innerText="当前状态：允许通知";
+				statusElement.style.color="green";
+				alert("已允许通知");
+			}
+			function disableNotify(){
+				statusElement=document.getElementById("notify-status");
+				statusElement.innerText="当前状态：禁用通知";
+				statusElement.style.color="red";
+				alert("已禁用通知");
+			}
+		</script>
+	</head>
+	<body>
+		<div class="header"><a href="index.html">← 返回系统首页</a></div>
+		<div class="panel">
+		        <h2>通知设置</h2>
+		        <p style="margin-bottom:15px;">选择是否接收系统通知（航班提醒、订单通知等）</p>
+		        <button class="btn" onclick="allowNotify()">允许通知</button>
+		        <button class="btn btn-default" style="margin-left:10px;" onclick="disableNotify()">禁用通知</button>
+		        <p id="notify-status" class="status">当前状态：允许通知</p>
+		</div>
+	</body>
+</html>

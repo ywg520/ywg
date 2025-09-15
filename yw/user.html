@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- 新 Bootstrap5 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+		 
+		<!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+		<title>用户功能模块</title>
+		<style>
+		    * {margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+		    body {background:#f5f5f5;padding:20px;}
+		    .panel {background:white;padding:20px;border-radius:8px;margin-bottom:20px;}
+		    .panel h2 {border-left:3px solid #3498db;padding-left:10px;margin-bottom:20px;}
+		    .form-group {margin-bottom:15px;}
+		    .form-group label {display:block;margin-bottom:5px;}
+		    .form-control {width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;}
+		    .btn {padding:8px 16px;border:none;border-radius:4px;background:#3498db;color:white;cursor:pointer;}
+		    .btn-default {background:#eee;color:#333;}
+		    .list-item {border:1px solid #ddd;padding:10px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;}
+		    .header {margin-bottom:20px;}
+		    .header a {text-decoration:none;color:#3498db;}
+		    .content {display:flex;gap:30px;flex-wrap:wrap;}
+		    .content > div {flex:1;min-width:250px;}
+		</style>
+		<script>
+			function addPassenger(){
+				name=document.getElementById("add-passenger-name").value;
+				idcard=document.getElementById("add-passenger-idcard").value;
+				if(!name||!idcard){
+					alert("请检查信息是否完善");
+				}else{
+					item=document.createElement("div");
+					item.className="list-item";
+					//模板字符串拼接
+					item.innerHTML= `
+						<span>${name}（${idcard}）</span>
+						<button class="btn btn-default" onclick="delPassenger(this)">删除</button>
+					`;
+					document.getElementById("passenger-list").appendChild(item);
+					alert("添加成功");
+					//清空输入框
+					document.getElementById("add-passenger-name").value = "";
+					document.getElementById("add-passenger-idcard").value = "";
+				}
+			}
+			function addAddress(){
+				type=document.getElementById("address-type").value;
+				addr=document.getElementById("add-address").value;
+				if(!addr){
+					alert("请填写地址");
+				}else{
+					if (type=="from") {
+						typeText="常用出发地";
+					} else if(type=="to"){
+						typeText="常用目的地";
+					}
+					item=document.createElement("div");
+					item.className = "list-item";
+					item.innerHTML=`
+						<span>${typeText}：${addr}</span>
+						<button class="btn btn-default" onclick="delAddress(this)">删除</button>
+					`;
+					document.getElementById('address-list').appendChild(item);
+					alert('添加成功！');
+					document.getElementById("add-address").value = "";
+				}
+			}
+			//parentElement 是 DOM 元素的一个属性，用于获取当前元素的直接父元素（返回一个 DOM 节点对象）。
+            //remove() 是 DOM 元素的一个方法，用于将当前元素从 DOM 树中移除（即从页面上删除该元素及其所有子元素）。
+			function delPassenger(btn){
+				btn.parentElement.remove();
+			}
+			function delAddress(btn){
+				btn.parentElement.remove();
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div class="header"><a href="index.html">← 返回系统首页</a></div>
+		<div class="panel">
+			<h2>用户功能</h2>
+			<div class="content">
+				<div>
+					<h3>常用乘客管理</h3>
+					<div id="passenger-list" style="margin-bottom:15px;">
+						<div class="list-item">
+							<span>张三（110********1234）</span>
+							<button class="btn btn-default" onclick="delPassenger(this)">删除</button>
+						</div>
+						<div class="list-item">
+							<span>李四（310********5678）</span>
+							<button class="btn btn-default" onclick="delPassenger(this)">删除</button>
+						</div>
+					</div>
+					<div>
+						<input type="text" class="form-control" id="add-passenger-name" placeholder="添加乘客姓名" style="margin-bottom:5px;">
+						<input type="text" class="form-control" id="add-passenger-idcard" placeholder="添加身份证号" style="margin-bottom:5px;">
+						<button class="btn" onclick="addPassenger()">添加乘客</button>
+					</div>
+				</div>
+				<div>
+					<h3>常用地址管理</h3>
+					<div id="address-list" style="margin-bottom:15px;">
+						<div class="list-item">
+							<span>常用出发地：北京</span>
+							<button class="btn btn-default" onclick="delAddress(this)">删除</button>
+						</div>
+						<div class="list-item">
+							<span>常用目的地：上海</span>
+							<button class="btn btn-default" onclick="delAddress(this)">删除</button>
+						</div>
+					</div>
+					<div>
+						<select class="form-control" id="address-type" style="margin-bottom:5px;">
+						    <option value="from">常用出发地</option>
+						    <option value="to">常用目的地</option>
+						</select>
+						<input type="text" class="form-control" id="add-address" placeholder="添加地址（如：广州）" style="margin-bottom:5px;">
+						<button class="btn" onclick="addAddress()">添加地址</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

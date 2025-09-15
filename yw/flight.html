@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>机票查询与预定模块</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- 新 Bootstrap5 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+		 
+		<!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+		<style>
+			* {margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+			body {background:#f5f5f5;padding:20px;}
+	        .panel {background:white;padding:20px;border-radius:8px;margin-bottom:20px;}
+		    .panel h2 {border-left:3px solid #3498db;padding-left:10px;margin-bottom:20px;}
+			.form-group {margin-bottom:15px;}
+			.form-group label {display:block;margin-bottom:5px;}
+			.form-control {width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;}
+			.btn {padding:8px 16px;border:none;border-radius:4px;background:#3498db;color:white;cursor:pointer;}
+			table {width:100%;border-collapse:collapse;margin-top:15px;}
+			th,td {border:1px solid #ddd;padding:10px;text-align:left;}
+			th {background:#f8f9fa;}
+			.header {margin-bottom:20px;}
+			.header a {text-decoration:none;color:#3498db;}
+		</style>
+		<script>
+			function searchFlight(){
+				from=document.getElementById("from").value
+				to=document.getElementById("to").value
+				date=document.getElementById("date").value
+				if(!from){
+					document.getElementById("fromtip").innerText="请输入正确的出发地";
+				}else{
+					document.getElementById("fromtip").innerText="";
+				}
+				if(!to){
+					document.getElementById("totip").innerText="请输入正确的目的地";
+				}else{
+					document.getElementById("totip").innerText="";
+				}
+				if(!date){
+					document.getElementById("datetip").innerText="请选择正确的出发日期"
+				}else{
+					document.getElementById("datetip").innerText=""
+				}
+				if(from&&to&&date){
+					document.getElementById("flight-list").style.display="block";
+				}
+			}
+			function bookFlight(no,price){//传递航班号和单价
+				document.getElementById("book-form").style.display="block";
+				document.getElementById("flight-no").innerText=no;
+				document.getElementById("total-price").innerText=price;	
+				//根据乘客数量变化金额
+				document.getElementById("pers-num").onchange=function(){
+					document.getElementById("total-price").innerText=price*this.value
+				}
+			}
+			function toPay(){
+				no=document.getElementById("flight-no").innerText;
+				price=document.getElementById("total-price").innerText;
+				//跳转支付模块（页面间传递数据的格式）
+				window.location.href = "pay.html?flight=CA1501&price=1280";
+			}
+		</script>
+	</head>
+	<body>
+		<div class="header"><a href="index.html">← 返回系统首页</a></div>
+		<div class="panel">
+			<h2>机票查询与预定</h2>
+		    <div class="form-group">
+			    <label>机票查询</label>
+			    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+			        <input type="text" class="form-control" id="from" placeholder="出发地" style="flex:1;min-width:150px;"><span id="fromtip" style="color: red;"></span><br>
+			        <input type="text" class="form-control" id="to" placeholder="目的地" style="flex:1;min-width:150px;"><span id="totip" style="color: red;"></span><br>
+			        <input type="date" class="form-control" id="date" style="flex:1;min-width:150px;"><span id="datetip" style="color: red;"></span><br>
+			        <button class="btn" style="align-self:flex-end;" onclick="searchFlight()">查询</button>
+			    </div>
+		    </div>
+		    <div id="flight-list" style="display:none;">
+		        <label>航班信息</label>
+		        <table>
+		            <tr>
+		                <th>航班号</th>
+		                <th>出发时间</th>
+		                <th>到达时间</th>
+		                <th>价格（元）</th>
+		                <th>余票</th>
+		                <th>操作</th>
+		            </tr>
+		            <tr>
+		                <td>CA1501</td>
+		                <td>2024-10-01 08:30</td>
+		                <td>2024-10-01 10:50</td>
+		                <td>1280</td>
+						<td>5张</td>
+						<td><button class="btn" onclick="bookFlight('CA1501',1280)">预定</button></td>
+					</tr>
+					<tr>
+						<td>MU5102</td>
+						<td>2024-10-01 14:15</td>
+						<td>2024-10-01 16:30</td>
+						<td>1050</td>
+						<td>3张</td>
+						<td><button class="btn" onclick="bookFlight('MU5102',1050)">预定</button></td>
+					</tr>
+		        </table>
+			</div>
+			<div id="book-form" style="display:none;margin-top:20px;border-top:1px solid #ddd;padding-top:20px;">
+		        <label>机票预定</label>
+		        <div class="form-group">
+		            <label>所选航班：<span id="flight-no"></span></label>
+		        </div>
+		        <div class="form-group">
+		            <label>乘客姓名</label>
+		            <input type="text" class="form-control" id="pers-name" placeholder="请输入乘客姓名">
+		        </div>
+		        <div class="form-group">
+		            <label>乘客身份证号</label>
+		            <input type="text" class="form-control" id="pers-idcard" placeholder="请输入乘客的身份证号">
+		        </div>
+		        <div class="form-group">
+		            <label>乘客数量（1-10人）</label>
+		            <input type="number" class="form-control" id="pers-num" min="1" max="10" value="1">
+		        </div>
+		        <div class="form-group">
+		            <label>总金额：¥<span id="total-price"></span></label>
+		        </div>
+		            <button class="btn" onclick="toPay()">确认预定</button>
+		        </div>
+			</div>
+	</body>
+</html>
